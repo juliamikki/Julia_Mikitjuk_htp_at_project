@@ -1,0 +1,7 @@
+.idea/
+out/
+target/
+*.iml
+chromedriver.exe
+/debug.log
+/file.json
