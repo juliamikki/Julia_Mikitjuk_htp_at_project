@@ -1,0 +1,18 @@
+{
+  "recipeName": "Ice Cream Sundae",
+  "ingredientList": [
+      {
+          "quantity": 3,
+          "itemDescription": "chocolate syrup or chocolate fudge"
+      },
+      {
+          "quantity": 1,
+          "itemDescription": "nuts"
+      },
+      {
+          "quantity": 1,
+          "itemDescription": "cherry"
+      }
+  ],
+  "preparationTime": "5 minutes"
+}
