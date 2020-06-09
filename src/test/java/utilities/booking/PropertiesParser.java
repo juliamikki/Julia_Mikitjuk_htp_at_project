@@ -23,6 +23,7 @@ public class PropertiesParser {
     }
 
     public static Properties getTrashMailProperties() {
+
         InputStream input;
         Properties prop = new Properties();
 

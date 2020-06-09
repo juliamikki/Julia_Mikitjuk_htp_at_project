@@ -20,7 +20,7 @@ public class DriverManager {
 
     public static WebDriver getChromeDriver() {
 
-        String pathToDriver= "src/test/resources/webdriver/chromedriver.exe";
+        String pathToDriver= "C://webdriver/chromedriver.exe";
         System.setProperty("webdriver.chrome.driver", pathToDriver);
         System.setProperty("webdriver.chrome.silentOutput", "true");
         return new ChromeDriver();
