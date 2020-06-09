@@ -32,6 +32,11 @@ public class TrashMailMainPage extends AbstractPage {
         super(driver);
     }
 
+    public void navigateToTrashMail () {
+        String url = PropertiesParser.getTrashMailProperties().getProperty("URL");
+        driver.get(url);
+    }
+
     public void createNewUser () {
 
         Properties prop = PropertiesParser.getTrashMailProperties();

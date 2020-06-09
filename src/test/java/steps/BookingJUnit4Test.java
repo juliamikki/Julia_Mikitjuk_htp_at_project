@@ -11,6 +11,8 @@ import web_pages.booking.SearchResultsPage;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import web_pages.booking.TrashMailMainPage;
+
 import java.io.IOException;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -20,6 +22,7 @@ public class BookingJUnit4Test {
     private static WebDriver driver;
     private static MainPage mainPage;
     private static SearchResultsPage searchResultsPage;
+    private static TrashMailMainPage trashMailMainPage;
     private static TestData [] testData;
     private static final Logger LOGGER = LogManager.getLogger(BookingJUnit4Test.class);
 
@@ -30,6 +33,7 @@ public class BookingJUnit4Test {
         Driver.maximize();
         mainPage = new MainPage(driver);
         searchResultsPage = new SearchResultsPage(driver);
+        trashMailMainPage = new TrashMailMainPage(driver);
         testData = TestDataParser.parseJackson();
         LOGGER.info(">>> Browser is started");
     }
@@ -116,6 +120,12 @@ public class BookingJUnit4Test {
         assert searchResultsPage.getColorOf10HotelTitle().equals("rgba(255, 0, 0, 1)") : "The color of the tenth hotel title is not as expected";
 
         System.out.println((double) (System.currentTimeMillis() - time)/1000);
+    }
+
+    @Test
+    public void generateTrashMail () {
+        trashMailMainPage.navigateToTrashMail();
+        trashMailMainPage.createNewUser();
     }
 
     @AfterClass
