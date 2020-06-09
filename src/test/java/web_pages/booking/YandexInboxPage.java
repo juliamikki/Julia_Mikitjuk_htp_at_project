@@ -10,8 +10,28 @@ public class YandexInboxPage extends AbstractPage {
     @FindBy (xpath = "//*[@class='mail-MessageSnippet-FromText']")
     public WebElement lastMail;
 
+    @FindBy (xpath = "//p/a[contains(@href,'trashmail.com')]")
+    private WebElement confirmationLink;
+
+    @FindBy (id = "nb-4")
+    private WebElement lastMailCheckbox;
+
+    @FindBy (xpath = "//div[contains(@title, 'Удалить')]")
+    private WebElement recycleBin;
+
+
     public YandexInboxPage (WebDriver driver) {
         super(driver);
+    }
+
+    public void confirmTrashMail () {
+        lastMail.click();
+        confirmationLink.click();
+    }
+
+    public void deleteLastEmail () {
+        lastMailCheckbox.click();
+        recycleBin.click();
     }
 
 }

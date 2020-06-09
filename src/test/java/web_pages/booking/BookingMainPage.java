@@ -12,7 +12,7 @@ import web_pages.AbstractPage;
 import java.util.List;
 import static web_driver.Driver.executeJS;
 
-public class MainPage extends AbstractPage {
+public class BookingMainPage extends AbstractPage {
 
     @FindBy (how=How.ID, using="ss")
     private WebElement destination;
@@ -32,12 +32,15 @@ public class MainPage extends AbstractPage {
     @FindBy(how= How.CLASS_NAME, using="sb-searchbox__button")
     public WebElement searchButton;
 
-    public MainPage (WebDriver driver) {
+    @FindBy(how= How.XPATH, using="//*[@class='sign_in_wrapper']/span[contains(text(), 'Register')]")
+    public WebElement registrationButton;
+
+    public BookingMainPage(WebDriver driver) {
         super(driver);
     }
 
     public void navigateToBooking() {
-        String url = PropertiesParser.getBookingProperties().getProperty("url");
+        String url = PropertiesParser.getBookingProperties().getProperty("URL_MAIN");
         driver.get(url);
     }
 
@@ -45,7 +48,6 @@ public class MainPage extends AbstractPage {
         destination.clear();
         destination.sendKeys(country);
     }
-
 
     public void enterDates (int arrivalInXDays, int durationOfStay) {
 
