@@ -8,7 +8,7 @@ import org.openqa.selenium.support.How;
 import web_driver.Driver;
 import web_pages.AbstractPage;
 
-public class SearchResultsPage extends AbstractPage {
+public class BookingSearchResultsPage extends AbstractPage {
 
     private Actions actions = new Actions(driver);
 
@@ -60,7 +60,7 @@ public class SearchResultsPage extends AbstractPage {
     @FindBy(how=How.CLASS_NAME, using="sr-usp-overlay__loading")
     public WebElement overlayCheckMark;
 
-    public SearchResultsPage (WebDriver driver) {
+    public BookingSearchResultsPage(WebDriver driver) {
         super(driver);
     }
 
