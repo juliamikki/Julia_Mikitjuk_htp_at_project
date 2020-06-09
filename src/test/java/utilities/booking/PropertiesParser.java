@@ -36,4 +36,18 @@ public class PropertiesParser {
         return prop;
     }
 
+    public static Properties getYandexProperties() {
+
+        InputStream input;
+        Properties prop = new Properties();
+
+        try {
+            input = new FileInputStream("src/test/resources/booking/yandex.properties");
+            prop.load(input);
+        } catch (IOException ex) {
+            System.err.println("ERROR: No GMail.properties file!");
+        }
+        return prop;
+    }
+
 }

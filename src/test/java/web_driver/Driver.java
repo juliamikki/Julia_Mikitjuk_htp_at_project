@@ -7,7 +7,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import java.time.Duration;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class Driver {
@@ -63,6 +65,15 @@ public class Driver {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript(script,ell);
 
+    }
+
+    public static void switchToNewTab () {
+        String parentWindow = driver.getWindowHandle();
+        Set<String> allWindowHandles = driver.getWindowHandles();
+        allWindowHandles.remove(parentWindow);
+
+        Iterator<String> ite = allWindowHandles.iterator();
+        driver.switchTo().window(ite.next());
     }
 
     public static void destroy() {
