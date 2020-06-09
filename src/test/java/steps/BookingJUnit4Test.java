@@ -6,14 +6,14 @@ import org.apache.log4j.Logger;
 import org.junit.runners.MethodSorters;
 import utilities.booking.TestDataParser;
 import web_driver.Driver;
-import web_pages.booking.MainPage;
-import web_pages.booking.SearchResultsPage;
+import web_pages.booking.*;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import web_pages.booking.TrashMailMainPage;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Set;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 
@@ -23,6 +23,9 @@ public class BookingJUnit4Test {
     private static MainPage mainPage;
     private static SearchResultsPage searchResultsPage;
     private static TrashMailMainPage trashMailMainPage;
+    private static YandexMainPage yandexMainPage;
+    private static YandexAuthorizationPage yandexAuthorizationPage;
+    private static YandexInboxPage yandexInboxPage;
     private static TestData [] testData;
     private static final Logger LOGGER = LogManager.getLogger(BookingJUnit4Test.class);
 
@@ -34,6 +37,9 @@ public class BookingJUnit4Test {
         mainPage = new MainPage(driver);
         searchResultsPage = new SearchResultsPage(driver);
         trashMailMainPage = new TrashMailMainPage(driver);
+        yandexMainPage = new YandexMainPage(driver);
+        yandexAuthorizationPage = new YandexAuthorizationPage(driver);
+        yandexInboxPage = new YandexInboxPage(driver);
         testData = TestDataParser.parseJackson();
         LOGGER.info(">>> Browser is started");
     }
@@ -89,7 +95,6 @@ public class BookingJUnit4Test {
 
         searchResultsPage.minPriceHotelsFilter.click();
         Driver.setWaiter().until(ExpectedConditions.elementToBeSelected(searchResultsPage.minPriceHotelsFilterSelected));
-        //Driver.setWaiter().until(ExpectedConditions.invisibilityOf(searchResultsPage.overlayCheckMark)); //throws NoSuchElement exception. Why??
 
         int minPriceRange = searchResultsPage.getMinFilterPrice();
         System.out.println(String.format(cheapHotels, data.getDestination(), minPriceRange));
@@ -126,6 +131,17 @@ public class BookingJUnit4Test {
     public void generateTrashMail () {
         trashMailMainPage.navigateToTrashMail();
         trashMailMainPage.createNewUser();
+    }
+
+    @Test
+    public void checkTrashMailIsCreated () {
+        yandexMainPage.navigateToYandex();
+        yandexMainPage.navigateToAuthorizationPage();
+        Driver.switchToNewTab();
+        yandexAuthorizationPage.logInToYandexMail();
+
+        assert yandexInboxPage.lastMail.getText().equals("TrashMail Robot") : "The email from dedicated sender wasn't found";
+
     }
 
     @AfterClass
