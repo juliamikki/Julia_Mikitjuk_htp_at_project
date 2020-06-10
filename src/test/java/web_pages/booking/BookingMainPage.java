@@ -35,12 +35,24 @@ public class BookingMainPage extends AbstractPage {
     @FindBy(how= How.XPATH, using="//*[@class='sign_in_wrapper']/span[contains(text(), 'Register')]")
     public WebElement registrationButton;
 
+    @FindBy(how= How.XPATH, using="//*[@class='sign_in_wrapper']/span[contains(text(), 'Sign in')]")
+    public WebElement signInButton;
+
+    @FindBy(how= How.CLASS_NAME, using="modal-mask-closeBtn")
+    public WebElement closePopUp;
+
+    @FindBy(how= How.XPATH, using="//li[@data-id='notifications']")
+    public WebElement notifications;
+
+    @FindBy(how= How.CLASS_NAME, using="uc-notification__alert")
+    public WebElement notificationAlert;
+
     public BookingMainPage(WebDriver driver) {
         super(driver);
     }
 
     public void navigateToBooking() {
-        String url = PropertiesParser.getBookingProperties().getProperty("URL_MAIN");
+        String url = PropertiesParser.getBookingProperties().getProperty("URL");
         driver.get(url);
     }
 

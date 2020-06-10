@@ -28,10 +28,11 @@ public class BookingRegistrationPage extends AbstractPage {
     }
 
     public void createAccount() {
-        email.sendKeys(PropertiesParser.getBookingProperties().getProperty("EMAIL"));
+        email.sendKeys(PropertiesParser.getTrashMailProperties().getProperty("EMAIL"));
         getStartedButton.click();
         password.sendKeys(PropertiesParser.getBookingProperties().getProperty("PWD"));
         confirmPassword.sendKeys(PropertiesParser.getBookingProperties().getProperty("PWD"));
         createAccountButton.click();
     }
+
 }
