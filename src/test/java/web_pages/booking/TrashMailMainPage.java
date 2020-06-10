@@ -41,6 +41,9 @@ public class TrashMailMainPage extends AbstractPage {
     @FindBy(xpath="//*[@href='#tab-quick']")
     private WebElement quickTab;
 
+    @FindBy (id = "fe-forward")
+    private WebElement realEmailQuick;
+
     @FindBy (xpath = "//form[@name='tm-login-form']/div[3]//button")
     private WebElement numberOfForwards;
 
@@ -72,6 +75,7 @@ public class TrashMailMainPage extends AbstractPage {
 
     public void createDisposableAddress () {
         quickTab.click();
+        //realEmailQuick.sendKeys(propYandex.getProperty("EMAIL"));
         numberOfForwards.click();
         actions.sendKeys(Keys.ARROW_UP).sendKeys(Keys.ARROW_UP)
                 .sendKeys(Keys.ARROW_UP).sendKeys(Keys.ARROW_UP)

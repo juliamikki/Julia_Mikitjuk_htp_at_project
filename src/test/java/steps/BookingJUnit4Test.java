@@ -26,6 +26,7 @@ public class BookingJUnit4Test {
     private static YandexAuthorizationPage yandexAuthorizationPage;
     private static YandexInboxPage yandexInboxPage;
     private static BookingRegistrationPage bookingRegistrationPage;
+    private static BookingSignInPage bookingSignInPage;
     private static TestData [] testData;
     private static final Logger LOGGER = LogManager.getLogger(BookingJUnit4Test.class);
 
@@ -42,6 +43,7 @@ public class BookingJUnit4Test {
         yandexAuthorizationPage = new YandexAuthorizationPage(driver);
         yandexInboxPage = new YandexInboxPage(driver);
         bookingRegistrationPage = new BookingRegistrationPage(driver);
+        bookingSignInPage = new BookingSignInPage(driver);
         testData = TestDataParser.parseJackson();
         LOGGER.info(">>> Browser is started");
     }
@@ -131,17 +133,13 @@ public class BookingJUnit4Test {
 
 
     @Test
-    public void checkTrashMailIsCreatedTest () throws FileNotFoundException, InterruptedException {
+    public void checkTrashMailIsCreatedTest () throws FileNotFoundException {
 
         trashMailMainPage.navigateToTrashMail();
         trashMailMainPage.createNewUser();
         trashMailMainPage.createDisposableAddress();
         trashMailMainPage.addDisposableEmailToPropertyFile();
-
-        yandexMainPage.navigateToYandex();
-        yandexMainPage.navigateToAuthorizationPage();
-        Driver.switchToNewTab();
-        yandexAuthorizationPage.logInToYandexMail();
+        navigateToInbox();
 
         assert yandexInboxPage.lastMail.getText().equals("TrashMail Robot") : "The email from dedicated sender wasn't found";
 
@@ -150,12 +148,29 @@ public class BookingJUnit4Test {
     }
 
     @Test
-    public void bookingRegistrationTest () {
+    public void bookingRegistrationTest () throws InterruptedException {
         bookingMainPage.navigateToBooking();
         bookingMainPage.registrationButton.click();
         bookingRegistrationPage.createAccount();
-        yandexInboxPage.lastMail.click();
+        navigateToInbox();
+        yandexInboxPage.confirmBookingRegistration();
+        bookingMainPage.navigateToBooking();
+        bookingMainPage.signInButton.click();
+        bookingSignInPage.signIn();
+        bookingMainPage.closePopUp.click();
+        bookingMainPage.notifications.click();
+
+        assert bookingMainPage.notificationAlert.getText().equals("You have no new notifications.") : "The email wasn't confirmed";
+
     }
+
+    public void navigateToInbox () {
+        yandexMainPage.navigateToYandex();
+        yandexMainPage.navigateToAuthorizationPage();
+        Driver.switchToNewTab();
+        yandexAuthorizationPage.logInToYandexMail();
+    }
+
 
 
     /*@AfterClass
