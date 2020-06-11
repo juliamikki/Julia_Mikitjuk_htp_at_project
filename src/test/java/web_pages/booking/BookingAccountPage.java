@@ -9,8 +9,44 @@ import web_pages.AbstractPage;
 
 public class BookingAccountPage extends AbstractPage {
 
-    @FindBy(how= How.XPATH, using="//*[@class='user_name_block']")
-    private WebElement accountButton;
+    @FindBy(id = "logo_no_globe_new_logo")
+    public WebElement bookingLogo;
+
+    @FindBy(xpath = "//*[@data-id='currency_selector']")
+    public WebElement chooseCurrency;
+
+    @FindBy(xpath = "//*[@data-id='language_selector']")
+    public WebElement selectLanguage ;
+
+    @FindBy(xpath = "//*[@data-id='notifications']")
+    public WebElement viewNotifications;
+
+    @FindBy(xpath = "//*[contains(@class,'uc_helpcenter')]")
+    public WebElement customerServiceHelpCenter;
+
+    @FindBy(id = "add_property_topbar")
+    public WebElement propertyList;
+
+    @FindBy(id = "current_account")
+    public WebElement yourAccount;
+
+    @FindBy(xpath = "//*[contains(@data-et-click,'accommodation')]")
+    public WebElement stays;
+
+    @FindBy(xpath = "//*[contains(@data-et-click,'flights')]")
+    public WebElement flights;
+
+    @FindBy(xpath = "//*[contains(@data-et-click,'rentalcars')]")
+    public WebElement carRentals;
+
+    @FindBy(xpath = "//*[contains(@data-decider-header,'attractions')]")
+    public WebElement attractions;
+
+    @FindBy(xpath = "//*[contains(@data-decider-header,'rideways')]")
+    public WebElement airportTaxis;
+
+    @FindBy(xpath = "//*[@class='modal-mask-closeBtn']")
+    public WebElement closePopUp;
 
     @FindBy(how= How.XPATH, using="//a[contains(text(), 'My Dashboard')]")
     private WebElement myDashboard;
@@ -32,12 +68,12 @@ public class BookingAccountPage extends AbstractPage {
     }
 
     public void goToMyDashboard () {
-        accountButton.click();
+        yourAccount.click();
         myDashboard.click();
     }
 
     public void goToMyNextTripList () {
-        accountButton.click();
+        yourAccount.click();
         myWishList.click();
     }
 

@@ -168,16 +168,13 @@ public class BookingJUnit4Test {
         bookingAccountPage.goToMyDashboard();
 
         assert bookingAccountPage.isEmailConfirmBannerPresented().equals(false) : "Booking registration was not confirmed";
-
     }
 
     @Test
     public void myNextTripListCreationTest () throws InterruptedException {
         TestData data = testData[3];
 
-        bookingMainPage.navigateToBooking();
-        bookingMainPage.signInButton.click();
-        bookingSignInPage.signIn();
+        signInToBooking();
         bookingMainPage.enterDestination(data.getDestination());
         bookingMainPage.enterDates(data.getArrivalInXDays(),data.getDurationOfStay());
         bookingMainPage.enterAccommodationDetails(data.getAdults(),data.getChildren(),data.getRooms());
@@ -197,6 +194,30 @@ public class BookingJUnit4Test {
         assert lastHotelTitle.equals(bookingAccountPage.secondFavoriteHotel.getText()) : "Last hotel hasn't appeared at My Next Trip list";
     }
 
+    @Test
+    public void bookingHeaderVerification () {
+
+        signInToBooking();
+        assert bookingAccountPage.bookingLogo.isDisplayed() : "Booking logo doesn't exist";
+        assert bookingAccountPage.chooseCurrency.isDisplayed() : "Choose currency icon doesn't exist";
+        assert bookingAccountPage.selectLanguage.isDisplayed() : "Select language icon doesn't exist";
+        assert bookingAccountPage.viewNotifications.isDisplayed() : "View notifications icon doesn't exist";
+        assert bookingAccountPage.customerServiceHelpCenter.isDisplayed() : "Customer service icon doesn't exist";
+        assert bookingAccountPage.propertyList.isDisplayed() : "Property list button doesn't exist";
+        assert bookingAccountPage.yourAccount.isDisplayed() : "Your account button doesn't exist";
+        assert bookingAccountPage.stays.isDisplayed() : "Stays tab doesn't exist";
+        assert bookingAccountPage.flights.isDisplayed() : "Flights tab doesn't exist";
+        assert bookingAccountPage.carRentals.isDisplayed() : "Car rentals tab doesn't exist";
+        assert bookingAccountPage.attractions.isDisplayed() : "Attractions tab doesn't exist";
+        assert bookingAccountPage.airportTaxis.isDisplayed() : "Airport taxis tab doesn't exist";
+    }
+
+    public void signInToBooking () {
+        bookingMainPage.navigateToBooking();
+        bookingMainPage.signInButton.click();
+        bookingSignInPage.signIn();
+        bookingAccountPage.closePopUp.click();
+    }
 
     public void logInToYandexInbox () {
         yandexMainPage.navigateToYandex();
@@ -205,9 +226,10 @@ public class BookingJUnit4Test {
         yandexAuthorizationPage.logInToYandexMail();
     }
 
-    @AfterClass
+
+    /*@AfterClass
     public static void stopBrowser() {
         Driver.destroy();
         LOGGER.info(">>> Browser is stopped");
-    }
+    }*/
 }
