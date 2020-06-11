@@ -2,7 +2,6 @@ package web_pages.booking;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import steps.cucumber.BaseSteps;
 import utilities.booking.DateCalculator;
 import utilities.booking.PropertiesParser;
 import org.openqa.selenium.By;
@@ -29,10 +28,10 @@ public class BookingMainPage extends AbstractPage {
     private WebElement goToPreviousMonth;
 
     @FindBy(how= How.ID, using="xp__guests__toggle")
-    private WebElement accomodation;
+    private WebElement accommodation;
 
     @FindBy(how=How.CLASS_NAME, using="bui-stepper__input")
-    private List<WebElement> accomodationQuantitiesInput;
+    private List<WebElement> accommodationQuantitiesInput;
 
     @FindBy(how= How.CLASS_NAME, using="sb-searchbox__button")
     public WebElement searchButton;
@@ -42,6 +41,7 @@ public class BookingMainPage extends AbstractPage {
 
     @FindBy(how= How.XPATH, using="//*[@class='sign_in_wrapper']/span[contains(text(), 'Sign in')]")
     public WebElement signInButton;
+
 
     public BookingMainPage(WebDriver driver) {
         super(driver);
@@ -76,12 +76,12 @@ public class BookingMainPage extends AbstractPage {
 
     public void enterAccommodationDetails (int adults, int children, int rooms) {
         LOGGER.debug(">>> Enter accommodation details (adults, children, rooms)");
-        accomodation.click();
+        accommodation.click();
 
         String scriptTemplate = "arguments[0].setAttribute('value', %s);";
-        executeJS(String.format(scriptTemplate, adults), accomodationQuantitiesInput.get(0));
-        executeJS(String.format(scriptTemplate, children), accomodationQuantitiesInput.get(1));
-        executeJS(String.format(scriptTemplate, rooms), accomodationQuantitiesInput.get(2));
+        executeJS(String.format(scriptTemplate, adults), accommodationQuantitiesInput.get(0));
+        executeJS(String.format(scriptTemplate, children), accommodationQuantitiesInput.get(1));
+        executeJS(String.format(scriptTemplate, rooms), accommodationQuantitiesInput.get(2));
     }
 
 }
