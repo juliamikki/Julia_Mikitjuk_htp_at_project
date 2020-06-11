@@ -1,4 +1,4 @@
-package utilities.booking;
+package utilities;
 
 import application_items.booking.TestData;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class TestDataParser {
 
-    private final static String JSONPath = "src/test/resources/booking/bookingTestData.json";
+    private final static String JSONPath = "src/test/resources/testData/bookingTestData.json";
     private static File JSONFile = new File (JSONPath);
 
     public static TestData[] parseJackson() throws IOException {
