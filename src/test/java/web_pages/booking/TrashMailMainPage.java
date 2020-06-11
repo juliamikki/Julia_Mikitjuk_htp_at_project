@@ -1,5 +1,7 @@
 package web_pages.booking;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,9 +18,10 @@ import java.util.Properties;
 
 public class TrashMailMainPage extends AbstractPage {
 
+    private static final Logger LOGGER = LogManager.getLogger(TrashMailMainPage.class);
     private final Properties propTrashM = PropertiesParser.getTrashMailProperties();
     private final Properties propYandex = PropertiesParser.getYandexProperties();
-    private Actions actions = new Actions(driver);
+    private final Actions actions = new Actions(driver);
 
     @FindBy(xpath="//*[@href='#tab-register']")
     private WebElement newUserTab;
@@ -59,11 +62,13 @@ public class TrashMailMainPage extends AbstractPage {
     }
 
     public void navigateToTrashMail () {
+        LOGGER.debug(">>> Navigate to Trashmail.com");
         String url = PropertiesParser.getTrashMailProperties().getProperty("URL");
         driver.get(url);
     }
 
     public void createNewUser () {
+        LOGGER.debug(">>> Create new TrashMail user");
         newUserTab.click();
         userName.clear();
         userName.sendKeys(propTrashM.getProperty("USER"));
@@ -74,18 +79,20 @@ public class TrashMailMainPage extends AbstractPage {
     }
 
     public void createDisposableAddress () {
+        LOGGER.debug(">>> Create new disposable email address");
         quickTab.click();
-        //realEmailQuick.sendKeys(propYandex.getProperty("EMAIL"));
+        realEmailQuick.clear();
+        realEmailQuick.sendKeys(propYandex.getProperty("EMAIL"));
         numberOfForwards.click();
         actions.sendKeys(Keys.ARROW_UP).sendKeys(Keys.ARROW_UP)
                 .sendKeys(Keys.ARROW_UP).sendKeys(Keys.ARROW_UP)
                 .sendKeys(Keys.ENTER).build().perform();
         createDisposableEmail.click();
-        newDisposableEmail.getText();
     }
 
     public void addDisposableEmailToPropertyFile() throws FileNotFoundException {
-        OutputStream out = new FileOutputStream("src/test/resources/booking/trashmail.properties");
+        LOGGER.debug(">>> Add new disposable email address to property file");
+        OutputStream out = new FileOutputStream("src/test/resources/properties/trashmail.properties");
         String disposableEmail = newDisposableEmail.getText();
         propTrashM.put("EMAIL", disposableEmail);
         try {

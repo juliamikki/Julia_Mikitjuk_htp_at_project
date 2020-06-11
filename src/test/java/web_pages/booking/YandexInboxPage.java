@@ -1,7 +1,7 @@
 package web_pages.booking;
 
-import com.google.gson.internal.bind.util.ISO8601Utils;
-import org.openqa.selenium.By;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,58 +10,69 @@ import web_pages.AbstractPage;
 
 public class YandexInboxPage extends AbstractPage {
 
-    @FindBy (xpath = "//*[@class='mail-MessageSnippet-FromText']")
-    public WebElement lastMail;
+    private static final Logger LOGGER = LogManager.getLogger(YandexInboxPage.class);
+    private int pageOrder = 1;
 
-    @FindBy (id = "nb-4")
-    public WebElement lastMailCheckbox;
-
-    @FindBy (xpath = "//*[@id='nb-1']//div[1]/div/div/div/a/div")
-    public WebElement lastMailAtSpam;
-
-    @FindBy (xpath = "//*[@class='mail-ComposeButton-Refresh js-main-action-refresh ns-action']")
-    public WebElement refreshEmailBox;
-
-    @FindBy (xpath = "//*[@data-title='Спам']")
-    public WebElement spam;
-
-    /*@FindBy (xpath = "//*[@title='Не спам!']")
-    private WebElement notSpam;*/
-
-    @FindBy (xpath = "//div[contains(@class,'ns-view-toolbar-buttons')]//div[7]")
-    private WebElement notSpam;
+    @FindBy (xpath = "//*[@title='robot@trashmail.com']")
+    public WebElement emailFromTrashMailBot;
 
     @FindBy (xpath = "//p/a[contains(@href,'trashmail.com')]")
-    private WebElement confirmationLink;
+    private WebElement confirmTrashMailLink;
+
+    @FindBy (xpath = " //*[@title='noreply@booking.com']")
+    private WebElement emailFromBooking;
+
+    @FindBy (xpath = "//a[contains(text(), 'Confirm')]")
+    private WebElement confirmBookingButton;
+
+    @FindBy (xpath = "//*[@data-title='Спам']")
+    private WebElement spam;
+
+    @FindBy (xpath = "//*[@class=' nb-button _nb-small-pseudo-button js-show-content']")
+    private WebElement showContent;
+
+    @FindBy (id = "nb-4")
+    private WebElement lastMailCheckbox;
 
     @FindBy (xpath = "//div[contains(@title, 'Удалить')]")
     private WebElement recycleBin;
 
-    @FindBy (xpath = "//a[contains(text(), 'Confirm')]")
-    private WebElement confirmButton;
+
+
+    @FindBy (xpath = "//*[@class='mail-ComposeButton-Refresh js-main-action-refresh ns-action']")
+    public WebElement refreshEmailBox;
+
+
+
 
 
     public YandexInboxPage (WebDriver driver) {
         super(driver);
     }
 
+    public int getPageOrder() {
+        return pageOrder;
+    }
+
     public void confirmTrashMail () {
-        lastMail.click();
-        confirmationLink.click();
+        LOGGER.debug(">>> Confirm trashmail.com registration");
+        emailFromTrashMailBot.click();
+        confirmTrashMailLink.click();
     }
 
     public void deleteLastEmail () {
+        LOGGER.debug(">>> Delete last email from the Inbox");
         lastMailCheckbox.click();
         recycleBin.click();
     }
 
 
-    public void confirmBookingRegistration () throws InterruptedException {
+    public void confirmBookingRegistration () {
+        LOGGER.debug(">>> Confirm booking.com registration");
         spam.click();
-        lastMailAtSpam.click();
-        notSpam.click();
-        Thread.sleep(3000);
-        confirmButton.click();
+        emailFromBooking.click();
+        showContent.click();
+        confirmBookingButton.click();
     }
 
 }
