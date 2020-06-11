@@ -7,9 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import java.time.Duration;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class Driver {
@@ -58,7 +56,11 @@ public class Driver {
                 .pollingEvery(Duration.ofSeconds(1))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class);
+    }
 
+    public static void executeJS (String script) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript(script);
     }
 
     public static void executeJS (String script, WebElement ell) {
@@ -68,17 +70,19 @@ public class Driver {
     }
 
     public static void switchToNewTab () {
-        String parentWindow = driver.getWindowHandle();
-        Set<String> allWindowHandles = driver.getWindowHandles();
-        allWindowHandles.remove(parentWindow);
+        List<String> tabs = new ArrayList<String> (driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(tabs.size()-1));
+    }
 
-        Iterator<String> ite = allWindowHandles.iterator();
-        driver.switchTo().window(ite.next());
+    public static void switchToXTab (int x) {
+        List<String> tabs = new ArrayList <String> (driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(x));
     }
 
     public static void destroy() {
         driver.close();
         driver.quit();
+        driver = null;
     }
 
 }

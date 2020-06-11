@@ -1,5 +1,8 @@
 package web_pages.booking;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import steps.cucumber.BaseSteps;
 import utilities.booking.DateCalculator;
 import utilities.booking.PropertiesParser;
 import org.openqa.selenium.By;
@@ -13,6 +16,8 @@ import java.util.List;
 import static web_driver.Driver.executeJS;
 
 public class BookingMainPage extends AbstractPage {
+
+    private static final Logger LOGGER = LogManager.getLogger(BookingMainPage.class);
 
     @FindBy (how=How.ID, using="ss")
     private WebElement destination;
@@ -38,31 +43,24 @@ public class BookingMainPage extends AbstractPage {
     @FindBy(how= How.XPATH, using="//*[@class='sign_in_wrapper']/span[contains(text(), 'Sign in')]")
     public WebElement signInButton;
 
-    @FindBy(how= How.CLASS_NAME, using="modal-mask-closeBtn")
-    public WebElement closePopUp;
-
-    @FindBy(how= How.XPATH, using="//li[@data-id='notifications']")
-    public WebElement notifications;
-
-    @FindBy(how= How.CLASS_NAME, using="uc-notification__alert")
-    public WebElement notificationAlert;
-
     public BookingMainPage(WebDriver driver) {
         super(driver);
     }
 
     public void navigateToBooking() {
+        LOGGER.debug(">>> Navigate to booking");
         String url = PropertiesParser.getBookingProperties().getProperty("URL");
         driver.get(url);
     }
 
     public void enterDestination (String country) {
+        LOGGER.debug(">>> Enter destination country");
         destination.clear();
         destination.sendKeys(country);
     }
 
     public void enterDates (int arrivalInXDays, int durationOfStay) {
-
+        LOGGER.debug(">>> Enter check-in date and duration of stay");
         dates.click();
         DateCalculator.defineTravelDates(arrivalInXDays, durationOfStay);
 
@@ -77,6 +75,7 @@ public class BookingMainPage extends AbstractPage {
     }
 
     public void enterAccommodationDetails (int adults, int children, int rooms) {
+        LOGGER.debug(">>> Enter accommodation details (adults, children, rooms)");
         accomodation.click();
 
         String scriptTemplate = "arguments[0].setAttribute('value', %s);";

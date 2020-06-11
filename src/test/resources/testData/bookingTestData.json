@@ -22,7 +22,16 @@
       "adults": 2,
       "children": 1,
       "rooms": 1
+    },
+    {
+      "destination": "Madrid",
+      "arrivalInXDays": 30,
+      "durationOfStay": 5,
+      "adults": 2,
+      "children": 0,
+      "rooms": 1
     }
+
 ]
 
 
