@@ -1,14 +1,14 @@
-package steps;
+package steps.junit;
 
 import application_items.booking.TestData;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.junit.runners.MethodSorters;
-import utilities.booking.TestDataParser;
+import org.openqa.selenium.*;
+import utilities.TestDataParser;
 import web_driver.Driver;
 import web_pages.booking.*;
 import org.junit.*;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.io.FileNotFoundException;
@@ -27,6 +27,7 @@ public class BookingJUnit4Test {
     private static YandexInboxPage yandexInboxPage;
     private static BookingRegistrationPage bookingRegistrationPage;
     private static BookingSignInPage bookingSignInPage;
+    private static BookingAccountPage bookingAccountPage;
     private static TestData [] testData;
     private static final Logger LOGGER = LogManager.getLogger(BookingJUnit4Test.class);
 
@@ -44,6 +45,7 @@ public class BookingJUnit4Test {
         yandexInboxPage = new YandexInboxPage(driver);
         bookingRegistrationPage = new BookingRegistrationPage(driver);
         bookingSignInPage = new BookingSignInPage(driver);
+        bookingAccountPage = new BookingAccountPage(driver);
         testData = TestDataParser.parseJackson();
         LOGGER.info(">>> Browser is started");
     }
@@ -78,6 +80,7 @@ public class BookingJUnit4Test {
         assert cheapestHotelPerDay >= highestPriceRange : "The Price of the Hotel is not in the required Price Range!";
 
         System.out.println((double) (System.currentTimeMillis() - time)/1000);
+        LOGGER.info(">>> Paris Test execution is finished");
     }
 
     @Test
@@ -108,7 +111,9 @@ public class BookingJUnit4Test {
         assert topHotelPrice <= minPriceRange : "The Price of the Hotel is not in the required Price Range! ";
 
         System.out.println((double) (System.currentTimeMillis() - time)/1000);
+        LOGGER.info(">>> Moscow Test execution is finished");
     }
+
 
     @Test
     public void osloTest ()  {
@@ -129,52 +134,80 @@ public class BookingJUnit4Test {
         assert bookingSearchResultsPage.getColorOf10HotelTitle().equals("rgba(255, 0, 0, 1)") : "The color of the tenth hotel title is not as expected";
 
         System.out.println((double) (System.currentTimeMillis() - time)/1000);
+        LOGGER.info(">>> Oslo Test execution is finished");
     }
 
 
     @Test
-    public void checkTrashMailIsCreatedTest () throws FileNotFoundException {
-
+    public void trashMailCreationTest() throws FileNotFoundException {
+        LOGGER.info(">>> TrashMail Test execution is started");
         trashMailMainPage.navigateToTrashMail();
         trashMailMainPage.createNewUser();
         trashMailMainPage.createDisposableAddress();
         trashMailMainPage.addDisposableEmailToPropertyFile();
-        navigateToInbox();
+        logInToYandexInbox();
 
-        assert yandexInboxPage.lastMail.getText().equals("TrashMail Robot") : "The email from dedicated sender wasn't found";
+        assert yandexInboxPage.emailFromTrashMailBot.getText().equals("TrashMail Robot") : "The email from dedicated sender wasn't found";
 
         yandexInboxPage.confirmTrashMail();
+        Driver.switchToXTab(yandexInboxPage.getPageOrder());
         yandexInboxPage.deleteLastEmail();
     }
 
     @Test
-    public void bookingRegistrationTest () throws InterruptedException {
+    public void bookingRegistrationTest () {
+
         bookingMainPage.navigateToBooking();
         bookingMainPage.registrationButton.click();
         bookingRegistrationPage.createAccount();
-        navigateToInbox();
+        logInToYandexInbox();
         yandexInboxPage.confirmBookingRegistration();
-        bookingMainPage.navigateToBooking();
-        bookingMainPage.signInButton.click();
+        Driver.switchToNewTab();
+        bookingSignInPage.navigateToSignIn();
         bookingSignInPage.signIn();
-        bookingMainPage.closePopUp.click();
-        bookingMainPage.notifications.click();
+        bookingAccountPage.goToMyDashboard();
 
-        assert bookingMainPage.notificationAlert.getText().equals("You have no new notifications.") : "The email wasn't confirmed";
+        assert bookingAccountPage.isEmailConfirmBannerPresented().equals(false) : "Booking registration was not confirmed";
 
     }
 
-    public void navigateToInbox () {
+    @Test
+    public void myNextTripListCreationTest () throws InterruptedException {
+        TestData data = testData[3];
+
+        bookingMainPage.navigateToBooking();
+        bookingMainPage.signInButton.click();
+        bookingSignInPage.signIn();
+        bookingMainPage.enterDestination(data.getDestination());
+        bookingMainPage.enterDates(data.getArrivalInXDays(),data.getDurationOfStay());
+        bookingMainPage.enterAccommodationDetails(data.getAdults(),data.getChildren(),data.getRooms());
+        bookingMainPage.searchButton.click();
+        bookingSearchResultsPage.addFavorites();
+
+        Thread.sleep(2000);
+        assert bookingSearchResultsPage.firstHotelHeartIcon.getCssValue("fill").equals("rgb(204, 0, 0)") : "The color of the first hotel heart title is not red";
+        assert bookingSearchResultsPage.lastHotelHeartIcon.getCssValue("fill").equals("rgb(204, 0, 0)") : "The color of the last hotel heart title is not red";
+
+        String firstHotelTitle = bookingSearchResultsPage.firstHotelTitle.getText();
+        String lastHotelTitle = bookingSearchResultsPage.lastHotelTitle.getText();
+        bookingAccountPage.goToMyNextTripList();
+        Thread.sleep(2000);
+
+        assert firstHotelTitle.equals(bookingAccountPage.firstFavoriteHotel.getText()) : "First hotel hasn't appeared at My Next Trip list";
+        assert lastHotelTitle.equals(bookingAccountPage.secondFavoriteHotel.getText()) : "Last hotel hasn't appeared at My Next Trip list";
+    }
+
+
+    public void logInToYandexInbox () {
         yandexMainPage.navigateToYandex();
         yandexMainPage.navigateToAuthorizationPage();
         Driver.switchToNewTab();
         yandexAuthorizationPage.logInToYandexMail();
     }
 
-
-
-    /*@AfterClass
+    @AfterClass
     public static void stopBrowser() {
         Driver.destroy();
-    }*/
+        LOGGER.info(">>> Browser is stopped");
+    }
 }
