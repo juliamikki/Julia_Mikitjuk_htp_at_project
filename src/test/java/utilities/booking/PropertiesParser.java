@@ -14,7 +14,7 @@ public class PropertiesParser {
         Properties prop = new Properties();
 
         try {
-            input = new FileInputStream("src/test/resources/booking/booking.properties");
+            input = new FileInputStream("src/test/resources/properties/booking.properties");
             prop.load(input);
         } catch (IOException ex) {
             System.err.println("ERROR: No booking.properties file!");
@@ -28,7 +28,7 @@ public class PropertiesParser {
         Properties prop = new Properties();
 
         try {
-            input = new FileInputStream("src/test/resources/booking/trashMail.properties");
+            input = new FileInputStream("src/test/resources/properties/trashMail.properties");
             prop.load(input);
         } catch (IOException ex) {
             System.err.println("ERROR: No trashMail.properties file!");
@@ -42,10 +42,10 @@ public class PropertiesParser {
         Properties prop = new Properties();
 
         try {
-            input = new FileInputStream("src/test/resources/booking/yandex.properties");
+            input = new FileInputStream("src/test/resources/properties/yandex.properties");
             prop.load(input);
         } catch (IOException ex) {
-            System.err.println("ERROR: No GMail.properties file!");
+            System.err.println("ERROR: No Yandex.properties file!");
         }
         return prop;
     }
