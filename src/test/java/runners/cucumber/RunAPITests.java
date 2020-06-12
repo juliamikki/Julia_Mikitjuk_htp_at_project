@@ -1,4 +1,4 @@
-package runners.Cucumber;
+package runners.cucumber;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.SnippetType;
@@ -8,11 +8,11 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions (
         plugin = {"pretty"},                                                    //красиво печатает
-        glue = {"steps"},                        //последовательность пакетов с тестами
+        glue = {"steps"},                                                       //последовательность пакетов с тестами
         features = {"src/test/resources/features/UsersApiTest.feature"},        //путь к файлам с фичами
         //tags = {"@qa or @prod"},                                              //
         snippets = SnippetType.CAMELCASE,                                       //
-        strict = false)                                                          //
+        strict = false)                                                         //
 
-public class RunTests {
+public class RunAPITests {
 }

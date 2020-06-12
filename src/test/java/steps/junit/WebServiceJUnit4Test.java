@@ -19,7 +19,6 @@ public class WebServiceJUnit4Test {
 
     @BeforeClass
     public static void getTestData() throws IOException, URISyntaxException {
-
         client = new MyHttpClient();
         queries = WebServiceParser.parseJacksonQuery();
     }
@@ -31,7 +30,6 @@ public class WebServiceJUnit4Test {
         String response = client.searchUser(query);
         List <User> actualUsers = WebServiceParser.parseJacksonResponse(response);
         List <User> expectedUsers = WebServiceParser.parseJacksonResultFile(0);
-
         assert actualUsers.equals(expectedUsers) : "Response result for All Users search is not as expected";
     }
 
@@ -42,7 +40,6 @@ public class WebServiceJUnit4Test {
         String response = client.searchUser(query);
         List <User> actualUsers = WebServiceParser.parseJacksonResponse(response);
         List <User> expectedUsers = WebServiceParser.parseJacksonResultFile(1);
-
         assert actualUsers.equals(expectedUsers) : "Response result for Full Long UserName search is not as expected";
     }
 
@@ -53,8 +50,7 @@ public class WebServiceJUnit4Test {
         String response = client.searchUser(query);
         List <User> actualUsers = WebServiceParser.parseJacksonResponse(response);
         List <User> expectedUsers = WebServiceParser.parseJacksonResultFile(2);
-
-        assert actualUsers.equals(expectedUsers) : "Response result for Full Long UserName search is not as expected";
+        assert actualUsers.equals(expectedUsers) : "Response result for Full Short UserName search is not as expected";
     }
 
     @Test
@@ -64,8 +60,7 @@ public class WebServiceJUnit4Test {
         String response = client.searchUser(query);
         List <User> actualUsers = WebServiceParser.parseJacksonResponse(response);
         List <User> expectedUsers = WebServiceParser.parseJacksonResultFile(3);
-
-        assert actualUsers.equals(expectedUsers) : "Response result for Full Long UserName search is not as expected";
+        assert actualUsers.equals(expectedUsers) : "Response result for Partial Long UserName search is not as expected";
     }
 
     @Test
@@ -75,7 +70,6 @@ public class WebServiceJUnit4Test {
         String response = client.searchUser(query);
         List <User> actualUsers = WebServiceParser.parseJacksonResponse(response);
         List <User> expectedUsers = WebServiceParser.parseJacksonResultFile(4);
-
-        assert actualUsers.equals(expectedUsers) : "Response result for Full Long UserName search is not as expected";
+        assert actualUsers.equals(expectedUsers) : "Response result for Partial Short UserName search is not as expected";
     }
 }
