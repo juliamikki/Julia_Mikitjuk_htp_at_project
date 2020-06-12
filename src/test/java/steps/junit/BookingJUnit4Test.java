@@ -5,7 +5,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.junit.runners.MethodSorters;
 import org.openqa.selenium.*;
-import utilities.TestDataParser;
+import utilities.booking.TestDataParser;
 import web_driver.Driver;
 import web_pages.booking.*;
 import org.junit.*;
@@ -227,9 +227,9 @@ public class BookingJUnit4Test {
     }
 
 
-    /*@AfterClass
+    @AfterClass
     public static void stopBrowser() {
         Driver.destroy();
         LOGGER.info(">>> Browser is stopped");
-    }*/
+    }
 }
