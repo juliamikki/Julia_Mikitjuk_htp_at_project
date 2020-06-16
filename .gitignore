@@ -5,3 +5,4 @@ target/
 chromedriver.exe
 /debug.log
 /file.json
+/myproject.log
