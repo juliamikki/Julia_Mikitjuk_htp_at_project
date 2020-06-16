@@ -1,4 +1,4 @@
-package utilities;
+package utilities.booking;
 
 import application_items.booking.TestData;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,28 +13,21 @@ import java.io.IOException;
 
 public class TestDataParser {
 
-    private final static String JSONPath = "src/test/resources/testData/bookingTestData.json";
-    private static File JSONFile = new File (JSONPath);
+    private final static String BOOKING_JSON_PATH = "src/test/resources/testData/bookingTestData.json";
+    private static File bookingJSONFile = new File (BOOKING_JSON_PATH);
 
     public static TestData[] parseJackson() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        TestData [] testData =  mapper.readValue(JSONFile, TestData[].class);
+        TestData [] testData =  mapper.readValue(bookingJSONFile, TestData[].class);
         return testData;
     }
 
-
-
+    //classwork:
     public TestData parseGSON() throws FileNotFoundException {
-
-        JsonReader JSONSource = new JsonReader(new FileReader(JSONPath));
-
+        JsonReader JSONSource = new JsonReader(new FileReader(BOOKING_JSON_PATH));
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        //or just Gson gson = new Gson();
 
-        //parse Json into a Search object:
-        return gson.fromJson(JSONSource, TestData.class);
-
-        //System.out.println(search.getSearchData()[2].getDestination());
+        return gson.fromJson(JSONSource, TestData.class); //parse Json into a Search object
     }
 }

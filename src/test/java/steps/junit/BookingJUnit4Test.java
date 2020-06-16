@@ -29,7 +29,7 @@ public class BookingJUnit4Test {
     private static BookingSignInPage bookingSignInPage;
     private static BookingAccountPage bookingAccountPage;
     private static TestData [] testData;
-    private static final Logger LOGGER = LogManager.getLogger(BookingJUnit4Test.class);
+    private static final Logger LOGGER = LogManager.getLogger(steps.junit.BookingJUnit4Test.class);
 
     @BeforeClass
     public static void startBrowser() throws IOException {

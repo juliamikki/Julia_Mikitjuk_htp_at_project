@@ -2,8 +2,9 @@ package web_pages.booking;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import utilities.PathList;
 import utilities.booking.DateCalculator;
-import utilities.booking.PropertiesParser;
+import utilities.PropertiesParser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -49,7 +50,7 @@ public class BookingMainPage extends AbstractPage {
 
     public void navigateToBooking() {
         LOGGER.debug(">>> Navigate to booking");
-        String url = PropertiesParser.getBookingProperties().getProperty("URL");
+        String url = PropertiesParser.getProperties(PathList.getBookingPropertyPath()).getProperty("URL");
         driver.get(url);
     }
 

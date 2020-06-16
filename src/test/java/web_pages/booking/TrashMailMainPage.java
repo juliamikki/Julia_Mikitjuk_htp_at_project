@@ -7,7 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import utilities.booking.PropertiesParser;
+import utilities.PathList;
+import utilities.PropertiesParser;
 import web_pages.AbstractPage;
 
 import java.io.FileNotFoundException;
@@ -19,8 +20,8 @@ import java.util.Properties;
 public class TrashMailMainPage extends AbstractPage {
 
     private static final Logger LOGGER = LogManager.getLogger(TrashMailMainPage.class);
-    private final Properties propTrashM = PropertiesParser.getTrashMailProperties();
-    private final Properties propYandex = PropertiesParser.getYandexProperties();
+    private final Properties propTrashM = PropertiesParser.getProperties(PathList.getTrashMailPropertyPath());
+    private final Properties propYandex = PropertiesParser.getProperties(PathList.getYandexPropertyPath());
     private final Actions actions = new Actions(driver);
 
     @FindBy(xpath="//*[@href='#tab-register']")
@@ -56,14 +57,13 @@ public class TrashMailMainPage extends AbstractPage {
     @FindBy (xpath = "//*[@id='tm-bodyleft-blank-text']/p//b[1]")
     private WebElement newDisposableEmail;
 
-
     public TrashMailMainPage (WebDriver driver) {
         super(driver);
     }
 
     public void navigateToTrashMail () {
         LOGGER.debug(">>> Navigate to Trashmail.com");
-        String url = PropertiesParser.getTrashMailProperties().getProperty("URL");
+        String url = propTrashM.getProperty("URL");
         driver.get(url);
     }
 
@@ -92,7 +92,7 @@ public class TrashMailMainPage extends AbstractPage {
 
     public void addDisposableEmailToPropertyFile() throws FileNotFoundException {
         LOGGER.debug(">>> Add new disposable email address to property file");
-        OutputStream out = new FileOutputStream("src/test/resources/properties/trashmail.properties");
+        OutputStream out = new FileOutputStream(PathList.getTrashMailPropertyPath());
         String disposableEmail = newDisposableEmail.getText();
         propTrashM.put("EMAIL", disposableEmail);
         try {

@@ -1,8 +1,8 @@
-package runners;
+package runners.temp;
 
 
-import application_items.web_service.Search;
-import utilities.MyHttpClient;
+import application_items.web_service.SearchQuery;
+import utilities.web_service.MyHttpClient;
 import utilities.booking.TestDataParser;
 import utilities.cook_book.MyJsonGenerator;
 import utilities.cook_book.MyJsonParser;
@@ -27,7 +27,7 @@ public class CookBookParserRunner {
         MyHttpClient client = new MyHttpClient();
         client.searchRates();
 
-        Search search = new Search("berta", true);
+        SearchQuery search = new SearchQuery("berta", true);
         client.searchUser(search);
     }
 }
