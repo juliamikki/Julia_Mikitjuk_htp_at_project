@@ -5,13 +5,16 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import utilities.booking.PropertiesParser;
+import utilities.PathList;
+import utilities.PropertiesParser;
 import web_pages.AbstractPage;
+
+import java.util.Properties;
 
 public class YandexAuthorizationPage extends AbstractPage {
 
     private static final Logger LOGGER = LogManager.getLogger(YandexAuthorizationPage.class);
-    private int pageOrder = 1;
+    private final Properties propYandex = PropertiesParser.getProperties(PathList.getYandexPropertyPath());
 
     @FindBy(id = "passp-field-login")
     private WebElement emailInput;
@@ -19,22 +22,18 @@ public class YandexAuthorizationPage extends AbstractPage {
     @FindBy(xpath = "//div[contains(@class,'passp-sign-in-button')]")
     private WebElement logInButton;
 
-    @FindBy(id="passp-field-passwd")
+    @FindBy(id = "passp-field-passwd")
     private WebElement passwordInput;
 
     public YandexAuthorizationPage (WebDriver driver) {
         super(driver);
     }
 
-    public int getPageOrder() {
-        return pageOrder;
-    }
-
-    public void logInToYandexMail () {
-        LOGGER.debug(">>> Log in to Yandex email");
-        emailInput.sendKeys(PropertiesParser.getYandexProperties().getProperty("EMAIL"));
+    public void fillInCredentials() {
+        emailInput.sendKeys(propYandex.getProperty("EMAIL"));
         logInButton.click();
-        passwordInput.sendKeys(PropertiesParser.getYandexProperties().getProperty("PWD"));
+        passwordInput.sendKeys(propYandex.getProperty("PWD"));
         logInButton.click();
+        LOGGER.debug(">>> Credentials are filled in successfully!");
     }
 }

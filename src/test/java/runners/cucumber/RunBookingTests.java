@@ -6,7 +6,7 @@ import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions (
+@CucumberOptions(
         plugin = {"pretty"},
         glue = {"steps.cucumber.booking"},
         features = {"src/test/resources/features/BookingTest.feature"},
@@ -14,5 +14,7 @@ import org.junit.runner.RunWith;
         snippets = SnippetType.CAMELCASE,
         strict = false)
 
-public class RunBookingHotelTests {
+public class RunBookingTests {
 }
+
+

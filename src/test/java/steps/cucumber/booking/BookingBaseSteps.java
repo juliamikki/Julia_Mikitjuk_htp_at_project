@@ -12,19 +12,18 @@ import web_pages.booking.*;
 
 import java.io.IOException;
 
-public class BaseSteps {
+public class BookingBaseSteps {
 
+    private static final Logger LOGGER = LogManager.getLogger(BookingBaseSteps.class);
     private static WebDriver driver;
     private static BookingMainPage bookingMainPage;
     private static BookingSearchResultsPage bookingSearchResultsPage;
     private static TrashMailMainPage trashMailMainPage;
-    private static YandexMainPage yandexMainPage;
     private static YandexAuthorizationPage yandexAuthorizationPage;
     private static YandexInboxPage yandexInboxPage;
     private static BookingRegistrationPage bookingRegistrationPage;
     private static BookingSignInPage bookingSignInPage;
     private static TestData[] testData;
-    private static final Logger LOGGER = LogManager.getLogger(BaseSteps.class);
 
     public static WebDriver getDriver() {
         return driver;
@@ -51,19 +50,18 @@ public class BaseSteps {
         bookingSearchResultsPage = new BookingSearchResultsPage(driver);
         bookingSearchResultsPage = new BookingSearchResultsPage(driver);
         trashMailMainPage = new TrashMailMainPage(driver);
-        yandexMainPage = new YandexMainPage(driver);
         yandexAuthorizationPage = new YandexAuthorizationPage(driver);
         yandexInboxPage = new YandexInboxPage(driver);
         bookingRegistrationPage = new BookingRegistrationPage(driver);
         bookingSignInPage = new BookingSignInPage(driver);
         testData = TestDataParser.parseJackson();
-        LOGGER.info(">>> Browser is started");
+        LOGGER.info(">>> Cucumber: Browser is started successfully!");
     }
 
     @After
     public static void stopBrowser() {
         Driver.destroy();
-        LOGGER.info(">>> Browser is stopped");
+        LOGGER.info(">>> Cucumber: Browser is stopped successfully!");
     }
 
 }

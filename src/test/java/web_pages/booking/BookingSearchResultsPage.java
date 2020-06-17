@@ -62,8 +62,6 @@ public class BookingSearchResultsPage extends AbstractPage {
     @FindBy(how=How.XPATH, using="//*[@data-hotelid][10]//span[contains(@class,'sr-hotel__name')]")
     private WebElement tenthHotelTitle;
 
-    //private List<WebElement> heartIcon = driver.findElements(By.className("bk-icon -iconset-heart sr-wl-entry-heart-svg"));
-
     @FindBy(how=How.XPATH, using="//*[@data-hotelid][1]//*[@class='bk-icon -iconset-heart sr-wl-entry-heart-svg']")
     public WebElement firstHotelHeartIcon;
 
@@ -81,49 +79,49 @@ public class BookingSearchResultsPage extends AbstractPage {
     }
 
     public void enterAccommodationDetailsUsingActions (int adults, int children, int rooms) {
-        LOGGER.debug(">>> Enter accommodation details (adults, children, rooms) using actions");
         actions.click(adultsField).sendKeys(Integer.toString(adults)).sendKeys(Keys.ENTER).build().perform();
         actions.click(roomsField).sendKeys(Integer.toString(rooms)).sendKeys(Keys.ENTER).build().perform();
+        LOGGER.debug(">>> Accommodation details are entered using actions successfully!");
     }
 
     public void chooseStarRating () {
-        LOGGER.debug(">>> Choose star rating");
         threeStarsHotels.click();
         fourStarsHotels.click();
+        LOGGER.debug(">>> Star rating is chosen successfully!");
     }
 
     public int getMinFilterPrice() {
-        LOGGER.debug(">>> Extract hotel price per night from the lowest budget hotels");
+        LOGGER.debug(">>> Hotel price per night from the lowest budget hotels is extracted successfully!");
         return WebElementsParser.parseToNumber(minPriceHotelsFilter);
     }
 
     public int getMaxFilterPrice() {
-        LOGGER.debug(">>> Extract hotel price per night from the highest budget hotels");
+        LOGGER.debug(">>> Hotel price per night from the highest budget hotels is extracted successfully!");
         return WebElementsParser.parseToNumber(maxPriceHotelsFilter);
     }
 
     public int getFirstHotelPricePerNight() {
-        LOGGER.debug(">>> Extract first hotel price per night from the suggested list");
+        LOGGER.debug(">>> First hotel price per night from the suggested list is extracted successfully!");
         return WebElementsParser.parseToNumber(firstHotel)/7;
     }
 
     public void applyStyleTo10Hotel () {
-        LOGGER.debug(">>> Apply styles to the background color and title color of the tenth hotel");
-
         Driver.executeJS("arguments[0].scrollIntoView();", tenthHotel);
         actions.moveToElement(driver.findElement(By.xpath("//*[@data-hotelid][10]"))).build().perform();
         Driver.executeJS("arguments[0].setAttribute('style','background-color : palegreen')",tenthHotel);
         Driver.executeJS("arguments[0].setAttribute('style', 'color : red')", tenthHotelTitle);
+        LOGGER.debug(">>> Styles to the background color and title color of the tenth hotel are applied successfully!");
     }
 
     public String getColorOf10HotelTitle () {
-        LOGGER.debug(">>> Get title color of the tenth hotel");
+        LOGGER.debug(">>> The color of the tenth hotel title is taken successfully!");
         return tenthHotelTitle.getCssValue("color");
     }
 
-    public void addFavorites () throws InterruptedException {
+    public void addFavorites ()  {
         firstHotelHeartIcon.click();
         lastHotelHeartIcon.click();
+        LOGGER.debug(">>> Hotels are added to the favourites successfully!");
     }
 
 }

@@ -1,5 +1,7 @@
 package web_pages.cinema;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,11 +10,13 @@ import org.openqa.selenium.support.FindBy;
 import utilities.PathList;
 import utilities.PropertiesParser;
 import web_pages.AbstractPage;
+import web_pages.booking.BookingMainPage;
 
 import java.util.List;
 
 public class SilverScreenMainPage  extends AbstractPage {
 
+    private static final Logger LOGGER = LogManager.getLogger(SilverScreenMainPage.class);
     private Actions actions = new Actions(driver);
 
     @FindBy (xpath = "(//*[@id='svg-icon-search'])[1]")

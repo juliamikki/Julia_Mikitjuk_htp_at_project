@@ -5,8 +5,11 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import utilities.booking.PropertiesParser;
+import utilities.PathList;
+import utilities.PropertiesParser;
 import web_pages.AbstractPage;
+
+import java.util.Properties;
 
 public class BookingRegistrationPage extends AbstractPage {
 
@@ -32,12 +35,15 @@ public class BookingRegistrationPage extends AbstractPage {
     }
 
     public void createAccount() {
-        LOGGER.debug(">>> Create new booking account");
-        email.sendKeys(PropertiesParser.getTrashMailProperties().getProperty("EMAIL"));
+        Properties propTrashM = PropertiesParser.getProperties(PathList.getTrashMailPropertyPath());
+        Properties propBooking = PropertiesParser.getProperties(PathList.getBookingPropertyPath());
+
+        email.sendKeys(propTrashM.getProperty("EMAIL"));
         getStartedButton.click();
-        password.sendKeys(PropertiesParser.getBookingProperties().getProperty("PWD"));
-        confirmPassword.sendKeys(PropertiesParser.getBookingProperties().getProperty("PWD"));
+        password.sendKeys(propBooking.getProperty("PWD"));
+        confirmPassword.sendKeys(propBooking.getProperty("PWD"));
         createAccountButton.click();
+        LOGGER.debug(">>> New booking account is created successfully!");
     }
 
 }

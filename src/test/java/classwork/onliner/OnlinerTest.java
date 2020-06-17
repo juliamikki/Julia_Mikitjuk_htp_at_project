@@ -1,4 +1,4 @@
-package web_pages.onliner;
+package classwork.onliner;
 
 import org.junit.BeforeClass;
 import org.junit.Test;

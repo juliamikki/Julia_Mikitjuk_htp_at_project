@@ -3,14 +3,12 @@ package web_pages.booking;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import utilities.booking.DateCalculator;
-import utilities.booking.PropertiesParser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import web_pages.AbstractPage;
-
 import java.util.List;
 import static web_driver.Driver.executeJS;
 
@@ -31,7 +29,7 @@ public class BookingMainPage extends AbstractPage {
     private WebElement accommodation;
 
     @FindBy(how=How.CLASS_NAME, using="bui-stepper__input")
-    private List<WebElement> accommodationQuantitiesInput;
+    private List <WebElement> accommodationQuantitiesInput;
 
     @FindBy(how= How.CLASS_NAME, using="sb-searchbox__button")
     public WebElement searchButton;
@@ -42,25 +40,17 @@ public class BookingMainPage extends AbstractPage {
     @FindBy(how= How.XPATH, using="//*[@class='sign_in_wrapper']/span[contains(text(), 'Sign in')]")
     public WebElement signInButton;
 
-
     public BookingMainPage(WebDriver driver) {
         super(driver);
     }
 
-    public void navigateToBooking() {
-        LOGGER.debug(">>> Navigate to booking");
-        String url = PropertiesParser.getBookingProperties().getProperty("URL");
-        driver.get(url);
-    }
-
     public void enterDestination (String country) {
-        LOGGER.debug(">>> Enter destination country");
         destination.clear();
         destination.sendKeys(country);
+        LOGGER.debug(">>> Destination is entered successfully!");
     }
 
     public void enterDates (int arrivalInXDays, int durationOfStay) {
-        LOGGER.debug(">>> Enter check-in date and duration of stay");
         dates.click();
         DateCalculator.defineTravelDates(arrivalInXDays, durationOfStay);
 
@@ -72,16 +62,16 @@ public class BookingMainPage extends AbstractPage {
         WebElement checkOut = driver.findElement(By.xpath(checkOutDateXPath));
         checkIn.click();
         checkOut.click();
+        LOGGER.debug(">>> Check-in date and duration of stay is entered successfully!");
     }
 
     public void enterAccommodationDetails (int adults, int children, int rooms) {
-        LOGGER.debug(">>> Enter accommodation details (adults, children, rooms)");
         accommodation.click();
-
         String scriptTemplate = "arguments[0].setAttribute('value', %s);";
         executeJS(String.format(scriptTemplate, adults), accommodationQuantitiesInput.get(0));
         executeJS(String.format(scriptTemplate, children), accommodationQuantitiesInput.get(1));
         executeJS(String.format(scriptTemplate, rooms), accommodationQuantitiesInput.get(2));
+        LOGGER.debug(">>> Accommodation details are entered successfully!");
     }
 
 }

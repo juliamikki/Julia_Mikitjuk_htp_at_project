@@ -9,12 +9,16 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import utilities.cook_book.MyJsonGenerator;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import classwork.MyJsonGenerator;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class MyHttpClient {
+
+    private static final Logger LOGGER = LogManager.getLogger(MyHttpClient.class);
 
     public String searchUser(SearchQuery query) throws URISyntaxException, IOException {
         HttpClient client = HttpClientBuilder.create().build();
@@ -22,6 +26,7 @@ public class MyHttpClient {
         HttpPost request = new HttpPost(builder.build());
         request.setEntity(new StringEntity(MyJsonGenerator.fromGSON(query)));
         HttpResponse response = client.execute(request);
+        LOGGER.debug(">>> Response from web service is received successfully!");
         return EntityUtils.toString(response.getEntity());
     }
 
