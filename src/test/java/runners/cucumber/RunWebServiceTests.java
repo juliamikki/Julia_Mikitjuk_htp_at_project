@@ -1,4 +1,4 @@
-package runners.сucumber;
+package runners.cucumber;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.SnippetType;
@@ -8,11 +8,11 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions (
         plugin = {"pretty"},
-        glue = {"steps.cucumber.booking"},
-        features = {"src/test/resources/features/BookingTest.feature"},
+        glue = {"steps.cucumber.web_service"},
+        features = {"src/test/resources/features/WebServiceTest.feature"},
         //tags = {"@qa or @prod"},
         snippets = SnippetType.CAMELCASE,
         strict = false)
 
-public class RunBookingHotelTests {
+public class RunWebServiceTests {
 }

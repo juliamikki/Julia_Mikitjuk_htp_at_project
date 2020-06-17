@@ -33,17 +33,11 @@ public class BookingSignInPage extends AbstractPage {
         super(driver);
     }
 
-    public void navigateToSignIn () {
-        LOGGER.debug(">>> Navigate to booking");
-        String url = propBooking.getProperty("SIGN_IN");
-        driver.get(url);
-    }
-
     public void signIn () {
-        LOGGER.debug(">>> Sign in to Booking.com");
         email.sendKeys(propTrashM.getProperty("EMAIL"));
         nextButton.click();
         password.sendKeys(propBooking.getProperty("PWD"));
         signInButton.click();
+        LOGGER.debug(">>> Credentials are filled in successfully!");
     }
 }

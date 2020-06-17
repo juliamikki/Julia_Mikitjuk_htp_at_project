@@ -1,4 +1,4 @@
-package utilities.cook_book;
+package classwork;
 
 import application_items.web_service.SearchQuery;
 import com.google.gson.Gson;

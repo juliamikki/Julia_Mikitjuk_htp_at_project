@@ -14,8 +14,6 @@ import java.util.Properties;
 public class BookingRegistrationPage extends AbstractPage {
 
     private static final Logger LOGGER = LogManager.getLogger(BookingRegistrationPage.class);
-    private final Properties propTrashM = PropertiesParser.getProperties(PathList.getTrashMailPropertyPath());
-    private final Properties propBooking = PropertiesParser.getProperties(PathList.getBookingPropertyPath());
 
     @FindBy (xpath = "//input[@type='email']")
     private WebElement email;
@@ -37,12 +35,15 @@ public class BookingRegistrationPage extends AbstractPage {
     }
 
     public void createAccount() {
-        LOGGER.debug(">>> Create new booking account");
+        Properties propTrashM = PropertiesParser.getProperties(PathList.getTrashMailPropertyPath());
+        Properties propBooking = PropertiesParser.getProperties(PathList.getBookingPropertyPath());
+
         email.sendKeys(propTrashM.getProperty("EMAIL"));
         getStartedButton.click();
         password.sendKeys(propBooking.getProperty("PWD"));
         confirmPassword.sendKeys(propBooking.getProperty("PWD"));
         createAccountButton.click();
+        LOGGER.debug(">>> New booking account is created successfully!");
     }
 
 }

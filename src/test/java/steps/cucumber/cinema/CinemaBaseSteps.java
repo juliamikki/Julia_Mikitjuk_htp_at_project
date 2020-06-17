@@ -13,7 +13,6 @@ import java.util.Properties;
 public class CinemaBaseSteps {
 
     private static final Logger LOGGER = LogManager.getLogger(CinemaBaseSteps.class);
-    //PropertyConfigurator.configure("/path/to/log4j.properties");
     private static WebDriver driver;
     private static SilverScreenMainPage silverScreenMainPage;
     private static Properties propCinema;
@@ -37,14 +36,13 @@ public class CinemaBaseSteps {
         Driver.maximize();
         silverScreenMainPage = new SilverScreenMainPage (driver);
         propCinema = PropertiesParser.getProperties(PathList.getSilverScreenPropertyPath());
-
-        LOGGER.info(">>> Browser is started");
+        LOGGER.info(">>> Cucumber: Browser is started successfully!");
     }
 
     @After
     public static void stopBrowser() {
         Driver.destroy();
-        LOGGER.info(">>> Browser is stopped");
+        LOGGER.info(">>> Cucumber: Browser is stopped successfully!");
     }
 
 }

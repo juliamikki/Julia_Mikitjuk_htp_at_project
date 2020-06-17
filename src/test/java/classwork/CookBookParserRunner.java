@@ -1,11 +1,9 @@
-package runners.temp;
+package classwork;
 
 
 import application_items.web_service.SearchQuery;
 import utilities.web_service.MyHttpClient;
 import utilities.booking.TestDataParser;
-import utilities.cook_book.MyJsonGenerator;
-import utilities.cook_book.MyJsonParser;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

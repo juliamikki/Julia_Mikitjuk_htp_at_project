@@ -1,5 +1,7 @@
 package web_pages.booking;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,6 +10,8 @@ import org.openqa.selenium.support.How;
 import web_pages.AbstractPage;
 
 public class BookingAccountPage extends AbstractPage {
+
+    private static final Logger LOGGER = LogManager.getLogger(BookingAccountPage.class);
 
     @FindBy(id = "logo_no_globe_new_logo")
     public WebElement bookingLogo;
@@ -70,11 +74,13 @@ public class BookingAccountPage extends AbstractPage {
     public void goToMyDashboard () {
         yourAccount.click();
         myDashboard.click();
+        LOGGER.debug(">>> My Dashboard is opened successfully!");
     }
 
     public void goToMyNextTripList () {
         yourAccount.click();
         myWishList.click();
+        LOGGER.debug(">>> My Next Trip List is opened successfully!");
     }
 
     public Boolean isEmailConfirmBannerPresented () {
@@ -84,6 +90,7 @@ public class BookingAccountPage extends AbstractPage {
         } catch (NoSuchElementException e) {
             return condition;
         }
+        LOGGER.debug(">>> Checked if email confirmation banner is presented successfully!");
         return condition;
     }
 

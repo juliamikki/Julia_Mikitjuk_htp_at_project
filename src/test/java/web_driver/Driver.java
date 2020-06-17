@@ -66,7 +66,6 @@ public class Driver {
     public static void executeJS (String script, WebElement ell) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript(script,ell);
-
     }
 
     public static void switchToNewTab () {

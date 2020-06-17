@@ -1,4 +1,4 @@
-package runners.сucumber;
+package runners.cucumber;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.SnippetType;
@@ -6,13 +6,15 @@ import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions (
+@CucumberOptions(
         plugin = {"pretty"},
-        glue = {"steps.cucumber.cinema"},
-        features = {"src/test/resources/features/CinemaTest.feature"},
-        tags = {"@qa"},
+        glue = {"steps.cucumber.booking"},
+        features = {"src/test/resources/features/BookingTest.feature"},
+        //tags = {"@qa or @prod"},
         snippets = SnippetType.CAMELCASE,
         strict = false)
 
-public class RunCinemaTests {
+public class RunBookingTests {
 }
+
+

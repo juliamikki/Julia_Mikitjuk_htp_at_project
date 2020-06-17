@@ -7,21 +7,17 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import utilities.PathList;
-import utilities.PropertiesParser;
+import utilities.*;
+import utilities.booking.UserGenerator;
 import web_pages.AbstractPage;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Properties;
 
 public class TrashMailMainPage extends AbstractPage {
 
     private static final Logger LOGGER = LogManager.getLogger(TrashMailMainPage.class);
-    private final Properties propTrashM = PropertiesParser.getProperties(PathList.getTrashMailPropertyPath());
-    private final Properties propYandex = PropertiesParser.getProperties(PathList.getYandexPropertyPath());
+    private static final Properties TRASHMAIL_PROP = PropertiesParser.getProperties(PathList.getTrashMailPropertyPath());
+    private static final Properties YANDEX_PROP = PropertiesParser.getProperties(PathList.getYandexPropertyPath());
     private final Actions actions = new Actions(driver);
 
     @FindBy(xpath="//*[@href='#tab-register']")
@@ -55,53 +51,37 @@ public class TrashMailMainPage extends AbstractPage {
     private WebElement createDisposableEmail;
 
     @FindBy (xpath = "//*[@id='tm-bodyleft-blank-text']/p//b[1]")
-    private WebElement newDisposableEmail;
+    public WebElement newDisposableEmail;
 
     public TrashMailMainPage (WebDriver driver) {
         super(driver);
     }
 
-    public void navigateToTrashMail () {
-        LOGGER.debug(">>> Navigate to Trashmail.com");
-        String url = propTrashM.getProperty("URL");
-        driver.get(url);
-    }
-
     public void createNewUser () {
-        LOGGER.debug(">>> Create new TrashMail user");
         newUserTab.click();
         userName.clear();
-        userName.sendKeys(propTrashM.getProperty("USER"));
-        password.sendKeys(propTrashM.getProperty("PWD"));
-        confirmPassword.sendKeys(propTrashM.getProperty("PWD"));
-        realEmail.sendKeys(propYandex.getProperty("EMAIL"));
+        String newUser = UserGenerator.generateUniqueUserName();
+        userName.sendKeys(newUser);
+        PropertiesParser.addProperty(PathList.getTrashMailPropertyPath(), "USER", newUser);
+        password.sendKeys(TRASHMAIL_PROP.getProperty("PWD"));
+        confirmPassword.sendKeys(TRASHMAIL_PROP.getProperty("PWD"));
+        realEmail.sendKeys(YANDEX_PROP.getProperty("EMAIL"));
         registerButton.click();
+        LOGGER.debug(">>> New TrashMail user is created successfully!");
     }
 
     public void createDisposableAddress () {
-        LOGGER.debug(">>> Create new disposable email address");
+
         quickTab.click();
         realEmailQuick.clear();
-        realEmailQuick.sendKeys(propYandex.getProperty("EMAIL"));
+        realEmailQuick.sendKeys(YANDEX_PROP.getProperty("EMAIL"));
         numberOfForwards.click();
         actions.sendKeys(Keys.ARROW_UP).sendKeys(Keys.ARROW_UP)
                 .sendKeys(Keys.ARROW_UP).sendKeys(Keys.ARROW_UP)
                 .sendKeys(Keys.ENTER).build().perform();
         createDisposableEmail.click();
+        PropertiesParser.addProperty(PathList.getTrashMailPropertyPath(), "EMAIL", newDisposableEmail.getText());
+        LOGGER.debug(">>> New disposable email address is created successfully!");
     }
-
-    public void addDisposableEmailToPropertyFile() throws FileNotFoundException {
-        LOGGER.debug(">>> Add new disposable email address to property file");
-        OutputStream out = new FileOutputStream(PathList.getTrashMailPropertyPath());
-        String disposableEmail = newDisposableEmail.getText();
-        propTrashM.put("EMAIL", disposableEmail);
-        try {
-            propTrashM.store(out, null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
 
 }

@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import steps.cucumber.booking.BookingBaseSteps;
 import web_driver.Driver;
 import web_pages.cinema.SilverScreenMainPage;
 
@@ -13,7 +12,7 @@ public class CinemaJUnit4Test {
 
     private static WebDriver driver;
     private static SilverScreenMainPage silverScreenMainPage;
-    private static final Logger LOGGER = LogManager.getLogger(BookingBaseSteps.class);
+    private static final Logger LOGGER = LogManager.getLogger(CinemaJUnit4Test.class);
 
     @BeforeClass
     public static void startBrowser() {

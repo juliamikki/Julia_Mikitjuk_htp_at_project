@@ -1,24 +1,37 @@
 package utilities;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import java.io.*;
 import java.util.Properties;
 
 public class PropertiesParser {
 
-    public static Properties getProperties(String path) {
+    private static final Logger LOGGER = LogManager.getLogger(PropertiesParser.class);
 
+    public static Properties getProperties(String path) {
         InputStream input;
         Properties prop = new Properties();
-
         try {
             input = new FileInputStream(path);
             prop.load(input);
         } catch (IOException ex) {
-            System.err.println("ERROR: No property file!");
+            LOGGER.error("ERROR: No property file!");
         }
-
         return prop;
+    }
+
+    public static void addProperty(String path, String property, String value) {
+
+        try {
+            PropertiesConfiguration properties = new PropertiesConfiguration(path);
+            properties.setProperty(property, value);
+            properties.save();
+            LOGGER.debug(">>> Property " + property + " at " + path + " is updated successfully!");
+        } catch (ConfigurationException ex) {
+            LOGGER.error(ex.getMessage());
+        }
     }
 }

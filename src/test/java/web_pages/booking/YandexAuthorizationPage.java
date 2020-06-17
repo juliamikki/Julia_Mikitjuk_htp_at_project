@@ -15,7 +15,6 @@ public class YandexAuthorizationPage extends AbstractPage {
 
     private static final Logger LOGGER = LogManager.getLogger(YandexAuthorizationPage.class);
     private final Properties propYandex = PropertiesParser.getProperties(PathList.getYandexPropertyPath());
-    private int pageOrder = 1;
 
     @FindBy(id = "passp-field-login")
     private WebElement emailInput;
@@ -23,22 +22,18 @@ public class YandexAuthorizationPage extends AbstractPage {
     @FindBy(xpath = "//div[contains(@class,'passp-sign-in-button')]")
     private WebElement logInButton;
 
-    @FindBy(id="passp-field-passwd")
+    @FindBy(id = "passp-field-passwd")
     private WebElement passwordInput;
 
     public YandexAuthorizationPage (WebDriver driver) {
         super(driver);
     }
 
-    public int getPageOrder() {
-        return pageOrder;
-    }
-
-    public void logInToYandexMail () {
-        LOGGER.debug(">>> Log in to Yandex email");
+    public void fillInCredentials() {
         emailInput.sendKeys(propYandex.getProperty("EMAIL"));
         logInButton.click();
         passwordInput.sendKeys(propYandex.getProperty("PWD"));
         logInButton.click();
+        LOGGER.debug(">>> Credentials are filled in successfully!");
     }
 }

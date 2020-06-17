@@ -6,3 +6,5 @@ chromedriver.exe
 /debug.log
 /file.json
 /myproject.log
+src/test/java/classwork/
+src/test/resources/temp/
