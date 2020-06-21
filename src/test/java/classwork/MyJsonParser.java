@@ -1,6 +1,6 @@
 package classwork;
 
-import application_items.cook_book.Recipe;
+import classwork.cook_book.Recipe;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;

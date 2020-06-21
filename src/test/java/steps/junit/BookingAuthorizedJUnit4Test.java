@@ -46,7 +46,7 @@ public class BookingAuthorizedJUnit4Test {
         yandexInboxPage = new YandexInboxPage(driver);
         testData = TestDataParser.parseJackson();
         bookingProp = PropertiesParser.getProperties(PathList.getBookingPropertyPath());
-        //bookingAuthorizationSteps.createTrashMail();
+        baseSteps.createTrashMail();
     }
 
     @Test
@@ -56,9 +56,6 @@ public class BookingAuthorizedJUnit4Test {
         bookingMainPage.registrationButton.click();
         bookingRegistrationPage.createAccount();
         baseSteps.logInToYandexInbox();
-
-        //Unable to locate element: {"method":"xpath","selector":"//a[contains(@class,'button desk-notif-card')]"}
-        //baseSteps.logInToYandexInboxWithCreds();
         yandexInboxPage.confirmBookingRegistration();
         Driver.switchToNewTab();
         baseSteps.navigateToPage(bookingProp.getProperty("SIGN_IN"));

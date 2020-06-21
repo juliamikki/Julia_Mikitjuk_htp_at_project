@@ -2,15 +2,13 @@ package web_pages.booking;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import utilities.booking.WebElementsParser;
+import utilities.WebElementsParser;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import web_driver.Driver;
 import web_pages.AbstractPage;
-
-import java.util.List;
 
 public class BookingSearchResultsPage extends AbstractPage {
 
@@ -100,9 +98,9 @@ public class BookingSearchResultsPage extends AbstractPage {
         return WebElementsParser.parseToNumber(maxPriceHotelsFilter);
     }
 
-    public int getFirstHotelPricePerNight() {
+    public int getFirstHotelPricePerNight(int durationOfStay) {
         LOGGER.debug(">>> First hotel price per night from the suggested list is extracted successfully!");
-        return WebElementsParser.parseToNumber(firstHotel)/7;
+        return WebElementsParser.parseToNumber(firstHotel)/durationOfStay;
     }
 
     public void applyStyleTo10Hotel () {

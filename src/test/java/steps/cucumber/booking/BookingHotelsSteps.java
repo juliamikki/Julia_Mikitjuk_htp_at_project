@@ -111,7 +111,7 @@ public class BookingHotelsSteps {
         highestPriceRange = bookingSearchResultsPage.getMaxFilterPrice();
         System.out.println(String.format(EXPENSIVE_HOTELS_MSG, data.getDestination(), highestPriceRange));
         Driver.setWaiter().until(ExpectedConditions.visibilityOf(bookingSearchResultsPage.lowestPriceFirstSelected));
-        cheapestHotelPerDay = bookingSearchResultsPage.getFirstHotelPricePerNight();
+        cheapestHotelPerDay = bookingSearchResultsPage.getFirstHotelPricePerNight(data.getDurationOfStay());
         System.out.println(String.format(CHEAPEST_HOTEL_MSG, cheapestHotelPerDay));
         LOGGER.debug(">>> Cucumber: Prices to compare are identified successfully!");
     }
@@ -120,7 +120,7 @@ public class BookingHotelsSteps {
     public void iIdentifyAndPrintPricesToCompareMinBudget () {
         minPriceRange = bookingSearchResultsPage.getMinFilterPrice();
         System.out.println(String.format(CHEAP_HOTELS_MSG, data.getDestination(), minPriceRange));
-        topHotelPrice = bookingSearchResultsPage.getFirstHotelPricePerNight();
+        topHotelPrice = bookingSearchResultsPage.getFirstHotelPricePerNight(data.getDurationOfStay());
         System.out.println(String.format(TOP_HOTEL_MSG, topHotelPrice));
         LOGGER.debug(">>> Cucumber: Prices to compare are identified successfully!");
     }
@@ -148,9 +148,4 @@ public class BookingHotelsSteps {
         assert bookingSearchResultsPage.getColorOf10HotelTitle().equals("rgba(255, 0, 0, 1)") : "The color of the tenth hotel title is not as expected";
         LOGGER.debug(">>> Cucumber: Styles are checked successfully!");
     }
-
-
-
-
-
 }

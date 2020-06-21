@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import utilities.*;
-import utilities.booking.UserGenerator;
+import utilities.UserGenerator;
 import web_pages.AbstractPage;
 
 import java.util.Properties;

@@ -69,6 +69,7 @@ public class BaseSteps {
         String url = yandexProp.getProperty("URL");
         navigateToPage(url);
         driver.findElement(By.xpath(EMAIL_BUTTON_XPATH)).click();
+        Driver.switchToNewTab();
         LOGGER.debug(">>> Signed in to " + url + " successfully!");
     }
 

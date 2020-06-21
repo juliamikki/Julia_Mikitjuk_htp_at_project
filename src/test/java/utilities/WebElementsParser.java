@@ -1,4 +1,4 @@
-package utilities.booking;
+package utilities;
 
 import org.openqa.selenium.WebElement;
 
