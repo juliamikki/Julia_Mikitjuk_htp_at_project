@@ -2,7 +2,7 @@ package web_pages.booking;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import utilities.booking.DateCalculator;
+import utilities.DateCalculator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

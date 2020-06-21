@@ -1,10 +1,9 @@
 package classwork;
 
-import application_items.web_service.SearchQuery;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import application_items.cook_book.Ingredient;
-import application_items.cook_book.Recipe;
+import classwork.cook_book.Ingredient;
+import classwork.cook_book.Recipe;
 
 import java.io.IOException;
 import java.nio.file.Files;

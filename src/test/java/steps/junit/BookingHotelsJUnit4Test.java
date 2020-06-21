@@ -67,7 +67,7 @@ public class BookingHotelsJUnit4Test {
         bookingSearchResultsPage.lowestPriceFirst.click();
         Driver.setWaiter().until(ExpectedConditions.visibilityOf(bookingSearchResultsPage.lowestPriceFirstSelected));
 
-        int cheapestHotelPerDay = bookingSearchResultsPage.getFirstHotelPricePerNight();
+        int cheapestHotelPerDay = bookingSearchResultsPage.getFirstHotelPricePerNight(data.getDurationOfStay());
         System.out.println(String.format(cheapestHotels, cheapestHotelPerDay));
 
         assert cheapestHotelPerDay >= highestPriceRange : "The Price of the Hotel is not in the required Price Range!";
@@ -97,7 +97,7 @@ public class BookingHotelsJUnit4Test {
 
         int minPriceRange = bookingSearchResultsPage.getMinFilterPrice();
         System.out.println(String.format(cheapHotels, data.getDestination(), minPriceRange));
-        int topHotelPrice = bookingSearchResultsPage.getFirstHotelPricePerNight();
+        int topHotelPrice = bookingSearchResultsPage.getFirstHotelPricePerNight(data.getDurationOfStay());
         System.out.println(String.format(topHotel, topHotelPrice));
 
         assert topHotelPrice <= minPriceRange : "The Price of the Hotel is not in the required Price Range! ";
